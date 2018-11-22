@@ -1,0 +1,18 @@
+{
+  "name": "coder-dojo",
+  "version": "1.0.0",
+  "description": "An LMS for learning to code",
+  "main": "index.js",
+  "scripts": {
+    "build": "cd web && npm install && npm run build && cd ..",
+    "deploy": "cp -a web/build. public/",
+    "postinstall": "npm run build && npm run deploy && echo 'Client built!",
+    "start": "foreman start -f Procfile.dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jon Meyers",
+  "license": "ISC",
+  "devDependencies": {
+    "foreman": "^3.0.1"
+  }
+}
