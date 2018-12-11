@@ -5,7 +5,10 @@ class ApplicationController < ActionController::API
   private
 
   def current_user
-    @current_user ||= User.find(payload['user_id'])
+    p "FAILED"
+    p payload
+    p User.find_by!(email: 'test4@test.com')
+    @current_user ||= User.find(payload['userId'])
   end
 
   def not_authorized

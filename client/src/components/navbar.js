@@ -3,8 +3,10 @@ import { Link, withRouter } from 'react-router-dom';
 import { isAuthenticated } from '../utils/authentication';
 
 const Navbar = (props) => {
+  console.log(props)
   return (
     <nav>
+      <Link to="/course">Course</Link>
       {
         isAuthenticated()
         ? <Link to="/logout">Logout</Link>

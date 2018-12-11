@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     post 'refresh', to: 'refresh#create'
   end
   namespace :api do
-    get '/', to: 'api#home'
-    get '/auth', to: 'api#auth'
+    root to: 'api#home'
+    get 'auth', to: 'auth#index'
   end
 end

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 
 class Login extends Component {
-  state = {};
+  state = { error: null };
   handleInput = (event) => {
     const { name, value } = event.target;
     this.setState({ [name]: value })
@@ -16,15 +16,19 @@ class Login extends Component {
         localStorage.setItem('isAuthenticated', true);
         this.props.history.push(this.props.location.state.from.pathname);
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        this.setState({ error: 'Could not authenticate that user' });
+      });
   }
 
   render() {
+    const { error } = this.state;
     return (
       <div>
         <input type="text" name="email" onChange={this.handleInput} />
         <input type="password" name="password" onChange={this.handleInput} />
         <button onClick={this.handleLogin}>login</button>
+        <p>{error}</p>
       </div>
     );
   }

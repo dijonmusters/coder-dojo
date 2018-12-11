@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { https } from '../utils/api';
 
 class Home extends Component {
   state = {
@@ -7,16 +8,16 @@ class Home extends Component {
   }
   componentDidMount() {
     axios.get('/api')
-      .then(resp => resp.data)
-      .then(resp => {
-        this.setState({ message: resp.data });
-      })
-      .catch(error => {
-        this.setState({ message: 'There was an issue connecting to the API'});
-      });
+    .then(resp => resp.data)
+    .then(resp => {
+      this.setState({ message: resp.data });
+    })
+    .catch(error => {
+      this.setState({ message: 'There was an issue connecting to the API'});
+    });
   }
   handleAuthCheck = () => {
-    axios.get('/api/auth')
+    https.get('/api/auth')
       .then(resp => resp.data)
       .then(resp => {
         console.log(resp)

@@ -13,10 +13,10 @@ const Logout = (props) => {
     .then(resp => {
       localStorage.removeItem('csrf');
       localStorage.removeItem('isAuthenticated');
-      props.history.push('/');
     })
-    .catch(error => console.log(error));
-    return null;
+    .catch(error => console.log(error))
+    .finally(() => props.history.push('/'));
+  return null;
 };
 
 export default Logout;
