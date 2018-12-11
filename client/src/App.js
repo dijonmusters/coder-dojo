@@ -1,32 +1,36 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import Navbar from './components/navbar';
+import Home from './pages/home';
+import Login from './pages/login';
+import Logout from './pages/logout';
+import Course from './pages/course';
+import NotFound from './pages/notFound';
+import { isAuthenticated } from './utils/authentication';
 
-class App extends Component {
-  state = {
-    message: 'Loading API',
-  }
-  componentDidMount() {
-    axios.get('/api')
-      .then(resp => resp.data)
-      .then(resp => {
-        this.setState({ message: resp.data });
-      })
-      .catch(error => {
-        this.setState({ message: 'There was an issue connecting to the API'});
-      });
-  }
-  render() {
-    const { message } = this.state;
-    return (
-      <div className="App">
-        <header className="App-header">
-          <p>{message}</p>
-        </header>
-      </div>
-    );
-  }
-}
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={(props) => (
+    isAuthenticated()
+      ? <Component {...props} />
+      : <Redirect to={{
+          pathname: '/login',
+          state: { from: props.location }
+        }} />
+  )} />
+)
+
+const App = () => (
+  <div>
+    <Navbar />
+    <Switch>
+      <Route exact path="/" component={ Home } />
+      <Route path="/login" component={ Login } />
+      <Route path="/register" component={ Login } />
+      <Route path="/logout" component={ Logout } />
+      <PrivateRoute exact path="/course" component={ Course } />
+      <Route path="/*" component={ NotFound } />
+    </Switch>
+  </div>
+);
 
 export default App;
