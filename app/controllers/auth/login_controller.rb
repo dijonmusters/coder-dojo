@@ -1,4 +1,4 @@
-class SigninController < ApplicationController
+class Auth::LoginController < ApplicationController
   before_action :authorize_access_request!, only: [:destroy]
   def create
     user = User.find_by!(email: params[:email])
@@ -13,7 +13,7 @@ class SigninController < ApplicationController
 
       render json: { csrf: tokens[:csrf] }
     else
-      not_authorized
+      not_found
     end
   end
 
@@ -26,6 +26,6 @@ class SigninController < ApplicationController
   private
 
   def not_found
-    render json: { error: 'Cannot find such email/password combination' }, status: :not_found
+    render json: { error: 'Incorrect email or password' }, status: :not_found
   end
 end
